@@ -1,13 +1,19 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <router-view/>
+    <router-view  />
+    <foot/>
   </div>
 </template>
 
 <script>
+import Foot from './components/foot.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Foot
+  }
 }
 </script>
 
