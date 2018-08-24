@@ -9,13 +9,11 @@ const getItem = (name) => {
 /**
  * 设置项
  * @param {名称} name
- * @param {值} val
  */
-const setItem = (name, val) => {
+const setItem = (name) => {
   // 设定当前值，暂时不考虑重复的情况
-  window.localStorage.setItem(name, val)
   let nameArr = window.localStorage.getItem('nameArr')
-  nameArr = nameArr.split(',').push(val).join(',')
+  nameArr = nameArr ? nameArr + ',' + name : name
   window.localStorage.setItem('nameArr', nameArr)
 }
 
@@ -23,10 +21,32 @@ const setItem = (name, val) => {
  * 获取所有的数据
  */
 const getAllItem = () => {
-  const nameArr = getItem('nameArr')
-  nameArr.map((val) => {
-    return { [val]: getItem(val) }
-  })
+  let nameArr = getItem('nameArr')
+  if (nameArr) {
+    nameArr = nameArr.split(',')
+    return nameArr
+  } else {
+    return []
+  }
+}
+/**
+ * 删除某一项
+ * @param {名称} name
+ */
+const delItem = (name) => {
+  let nameStr = getItem('nameArr')
+  let nameArr = nameStr.split(',')
+  // 如果有匹配项
+  let index = nameArr.indexOf(name)
+  console.log(index, '---index')
+  if (index > -1) {
+    nameArr.splice(index, 1)
+    window.localStorage.setItem('nameArr', nameArr.join(','))
+  }
 }
 
-export { getItem, setItem, getAllItem }
+export {
+  delItem,
+  setItem,
+  getAllItem
+}
